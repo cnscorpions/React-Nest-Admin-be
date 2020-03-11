@@ -15,9 +15,22 @@ export class AuthService {
 		return token;
 	}
 
+	// extract token
+	extractJWTAndVerify(req) {
+		const token = req.headers.authorization;
+		try {
+			const decode = this.verifyJWT(token);
+			return decode;
+		} catch(e) {
+			return false;
+		}
+	}
+
 	// verify jwt
-	verifyJWT(token) {
-		const decoded = jwt.verify(token, PRIVATE_KEY);
-		return decoded;
+	private verifyJWT(token) {
+		if (token) {
+			const decoded = jwt.verify(token, PRIVATE_KEY);
+			return decoded;
+		}
 	}
 }

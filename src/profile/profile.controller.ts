@@ -1,14 +1,15 @@
-import { Controller, Get, Query, Headers } from '@nestjs/common';
+import { Controller, Get, Headers, UseGuards} from '@nestjs/common';
 import { ProfileService } from "./profile.service";
+import { AuthGuard } from "../auth/auth.guard";
 
 @Controller('profile')
 export class ProfileController {
 
-	constructor(private readonly profileService: ProfileService) {}
+	constructor() {}
 
 	@Get()
+	@UseGuards(AuthGuard)
 	getProfile(@Headers("authorization") token) {
-		const result = this.profileService.verifyToken(token);
-		return result;
+		return "can activate";
 	}
 }
