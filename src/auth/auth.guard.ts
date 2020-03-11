@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
 	}
 
 	private validateRequest(req): boolean {
-		console.log(this.authService.extractJWTAndVerify(req));
 		const result = this.authService.extractJWTAndVerify(req) ? true : false;
 		return result;
 	}
