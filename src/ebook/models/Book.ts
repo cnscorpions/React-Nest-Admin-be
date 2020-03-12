@@ -35,7 +35,7 @@ export class Book {
 
 		const suffix = mimetype === MIME_TYPE_EPUB ? ".epub" : ""; // 后缀名
 		const oldBookPath = `${des}/${filename}`;
-		const bookPath = `${des}/${filename}/${suffix}`;
+		const bookPath = `${des}/${filename}${suffix}`;
 		const url = `${UPLOAD_DIR}/book/${filename}${suffix}`;
     if (fs.existsSync(oldBookPath) && !fs.existsSync(bookPath)) {
       fs.renameSync(oldBookPath, bookPath) // 重命名文件
