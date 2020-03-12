@@ -16,7 +16,7 @@ export class EbookController {
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	uploadEbook(@UploadedFile() file) {
 		let book = new Book(file);
-		console.log(file);
+		return book;
 	}
 
 }
