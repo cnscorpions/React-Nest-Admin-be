@@ -24,7 +24,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : "https://github.com/cnscorpions/React-Nest-Admin-be.git",
       path : "/home/gavin/react-nest-admin/back-end",
-      'post-deploy' : 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      "post-deploy" : "npm install && npm run build && pm2 reload ecosystem.config.js --env production && pm2 save"
     }
   }
 };
