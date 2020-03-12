@@ -15,7 +15,7 @@ export class Book {
     category: number; // 分类ID
     categoryText: string; // 分类名称
     language: string; // 语种
-    originalName: string;
+    originalName: string; // 原文件名
 
 	constructor(file, data?: any) {
 		if (file) {
@@ -37,23 +37,24 @@ export class Book {
 		const oldBookPath = `${des}/${filename}`;
 		const bookPath = `${des}/${filename}${suffix}`;
 		const url = `${UPLOAD_DIR}/book/${filename}${suffix}`;
-    if (fs.existsSync(oldBookPath) && !fs.existsSync(bookPath)) {
-      fs.renameSync(oldBookPath, bookPath) // 重命名文件
-    }
+        
+        if (fs.existsSync(oldBookPath) && !fs.existsSync(bookPath)) {
+          fs.renameSync(oldBookPath, bookPath) // 重命名文件
+        }
 
-    this.fileName = filename // 文件名
-    this.path = `/book/${filename}${suffix}` // epub文件路径
-    this.filePath = this.path // epub文件路径
-    this.url = url // epub文件url
-    this.title = '' // 标题
-    this.author = '' // 作者
-    this.publisher = '' // 出版社
-    this.contents = [] // 目录
-    this.cover = '' // 封面图片URL
-    this.category = -1 // 分类ID
-    this.categoryText = '' // 分类名称
-    this.language = '' // 语种
-    this.originalName = file.originalname
+        this.fileName = filename // 文件名
+        this.path = `/book/${filename}${suffix}` // epub文件路径
+        this.filePath = this.path // epub文件路径
+        this.url = url // epub文件url
+        this.title = '' // 标题
+        this.author = '' // 作者
+        this.publisher = '' // 出版社
+        this.contents = [] // 目录
+        this.cover = '' // 封面图片URL
+        this.category = -1 // 分类ID
+        this.categoryText = '' // 分类名称
+        this.language = '' // 语种
+        this.originalName = file.originalname
 
 	}
 
