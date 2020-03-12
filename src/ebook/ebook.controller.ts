@@ -3,6 +3,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { AuthGuard } from "../auth/auth.guard";
 import { EbookService } from "./ebook.service";
 import { UPLOAD_DIR } from "../utils/constant";
+import { Book } from "./models/Book";
 
 @Controller('ebook')
 export class EbookController {
@@ -14,7 +15,8 @@ export class EbookController {
 	@UseGuards(AuthGuard)
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	uploadEbook(@UploadedFile() file) {
-
+		let book = new Book(file);
+		console.log(file);
 	}
 
 }
