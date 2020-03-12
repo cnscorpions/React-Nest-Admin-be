@@ -2,6 +2,7 @@ import { Controller, Post, Body, UseInterceptors, UploadedFile, UseGuards } from
 import { FileInterceptor } from "@nestjs/platform-express";
 import { AuthGuard } from "../auth/auth.guard";
 import { EbookService } from "./ebook.service";
+import { UPLOAD_DIR } from "../utils/constant";
 
 @Controller('ebook')
 export class EbookController {
@@ -11,7 +12,7 @@ export class EbookController {
 	// upload ebook
 	@Post("upload")
 	@UseGuards(AuthGuard)
-	@UseInterceptors(FileInterceptor("file", { dest: "uploads/"}))
+	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	uploadEbook(@UploadedFile() file) {
 
 	}
