@@ -4,7 +4,6 @@ import * as fs from "fs";
 export class Book {
 
     fileName: string; // 文件名
-    path: string; // epub文件路径
     filePath: string; // epub文件路径
     url: string; // epub文件url
     title: string; // 标题
@@ -36,15 +35,14 @@ export class Book {
 		const suffix = mimetype === MIME_TYPE_EPUB ? ".epub" : ""; // 后缀名
 		const oldBookPath = `${des}/${filename}`;
 		const bookPath = `${des}/${filename}${suffix}`;
-		const url = `${UPLOAD_DIR}/book/${filename}${suffix}`;
+		const url = `${UPLOAD_DIR}${filename}${suffix}`;
         
         if (fs.existsSync(oldBookPath) && !fs.existsSync(bookPath)) {
           fs.renameSync(oldBookPath, bookPath) // 重命名文件
         }
 
         this.fileName = filename // 文件名
-        this.path = `/book/${filename}${suffix}` // epub文件路径
-        this.filePath = this.path // epub文件路径
+        this.filePath = bookPath // epub文件路径
         this.url = url // epub文件url
         this.title = '' // 标题
         this.author = '' // 作者

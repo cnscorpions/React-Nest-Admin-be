@@ -14,9 +14,10 @@ export class EbookController {
 	@Post("upload")
 	@UseGuards(AuthGuard)
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
-	uploadEbook(@UploadedFile() file) {
-		let book = new Book(file);
-		return book;
+	async uploadEbook(@UploadedFile() file) {
+		const book = new Book(file);
+		const result = await this.ebookService.create(book);
+		return result;
 	}
 
 }
