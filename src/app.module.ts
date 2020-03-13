@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoginModule } from './login/login.module';
 import { AuthService } from './auth/auth.service';
-import { ProfileModule } from './profile/profile.module';
 import { EbookModule } from './ebook/ebook.module';
 
 @Module({
@@ -14,7 +13,6 @@ import { EbookModule } from './ebook/ebook.module';
   		useNewUrlParser: true,
   		useUnifiedTopology: true 
   	}),
-  	ProfileModule,
   	EbookModule
   ],
   controllers: [AppController],
