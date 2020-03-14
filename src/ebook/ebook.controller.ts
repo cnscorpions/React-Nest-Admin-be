@@ -30,8 +30,8 @@ export class EbookController {
 	@Post("delete")
 	@UseGuards(AuthGuard)
 	async removeEbook(@Body() body) {
-		const { id } = body;
-		return this.ebookService.delete(id);
+		const { id, filePath } = body;
+		return this.ebookService.delete(id, filePath);
 	}
 
 }

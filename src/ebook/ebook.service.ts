@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Ebook } from "./interfaces/ebook.interface";
 import { EbookDto } from "./dto/ebook.dto";
+import * as fs from "fs";
 
 @Injectable()
 export class EbookService {
@@ -23,7 +24,12 @@ export class EbookService {
   }
 
   // 删除
-  async delete(id): Promise<any> {
+  async delete(id, filePath): Promise<any> {
+  	if (fs.existsSync(filePath)) {
+  		fs.unlinkSync(filePath);
+  	} else {
+  		throw new HttpException({}, 404);
+  	}
   	return this.ebookModel.remove({ _id: id }).exec();
   }
 
