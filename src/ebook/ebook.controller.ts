@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from "@nestjs/platform-express";
 import { AuthGuard } from "../auth/auth.guard";
 import { EbookService } from "./ebook.service";
@@ -17,6 +17,13 @@ export class EbookController {
 	async uploadEbook(@UploadedFile() file) {
 		const book = new Book(file);
 		const result = await this.ebookService.create(book);
+		return result;
+	}
+
+	@Get("list")
+	@UseGuards(AuthGuard)
+	async getEbookList() {
+		const result = await this.ebookService.findAll();
 		return result;
 	}
 
