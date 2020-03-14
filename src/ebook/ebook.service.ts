@@ -22,4 +22,9 @@ export class EbookService {
     return this.ebookModel.find().exec();
   }
 
+  // 删除
+  async delete(id): Promise<any> {
+  	return this.ebookModel.remove({ _id: id }).exec();
+  }
+
 }

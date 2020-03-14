@@ -27,4 +27,11 @@ export class EbookController {
 		return result;
 	}
 
+	@Post("delete")
+	@UseGuards(AuthGuard)
+	async removeEbook(@Body() body) {
+		const { id } = body;
+		return this.ebookService.delete(id);
+	}
+
 }
