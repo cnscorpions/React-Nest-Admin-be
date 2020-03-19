@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoginModule } from './login/login.module';
 import { AuthService } from './auth/auth.service';
-import { EbookModule } from './ebook/ebook.module';
+import { FileModule } from './upload/file.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { EbookModule } from './ebook/ebook.module';
   		useNewUrlParser: true,
   		useUnifiedTopology: true 
   	}),
-  	EbookModule
+  	FileModule
   ],
   controllers: [AppController],
   providers: [AppService, AuthService],
