@@ -14,7 +14,8 @@ export class FileController {
 	@Post("upload")
 	@UseGuards(AuthGuard)
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
-	async uploadEbook(@UploadedFile() file) {
+	async uploadFile(@UploadedFile() file, @Body() body) {
+		console.log(file, body);
 		const fileObj = new File(file);
 		const result = await this.fileService.create(fileObj);
 		return result;
@@ -22,14 +23,14 @@ export class FileController {
 
 	@Get("list")
 	@UseGuards(AuthGuard)
-	async getEbookList() {
+	async getFileList() {
 		const result = await this.fileService.findAll();
 		return result;
 	}
 
 	@Post("delete")
 	@UseGuards(AuthGuard)
-	async removeEbook(@Body() body) {
+	async removeFile(@Body() body) {
 		const { id, filePath } = body;
 		return this.fileService.delete(id, filePath);
 	}
