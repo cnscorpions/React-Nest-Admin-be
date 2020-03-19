@@ -15,8 +15,8 @@ export class FileController {
 	@UseGuards(AuthGuard)
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	async uploadFile(@UploadedFile() file, @Body() body) {
-		console.log(file, body);
-		const fileObj = new File(file);
+		console.log(file, body['user']);
+		const fileObj = new File(file, body['user']);
 		const result = await this.fileService.create(fileObj);
 		return result;
 	}

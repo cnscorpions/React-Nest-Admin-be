@@ -13,13 +13,13 @@ export class File {
 
 	constructor(file, data?: any) {
 		if (file) {
-			this.createFile(file);
+			this.createFile(file, data);
 		} else {
 
 		}
 	}
 
-	private createFile(file) {
+	private createFile(file, data) {
 
 		const {
 			destination: des, // 文件本地存储目录
@@ -40,6 +40,7 @@ export class File {
         this.fileName = filename 
         this.filePath = filePath 
 				this.url = url
+				this.uploader = data;
 				this.timeOfUpload = new Date().getTime();
 				this.fileSize = size;
 

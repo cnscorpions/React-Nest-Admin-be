@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface File extends Document {
+export interface IFile extends Document {
 	readonly fileName: string; // 文件名
     readonly filePath: string; // epub文件路径
     readonly url: string; // epub文件url
