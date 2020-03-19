@@ -19,6 +19,7 @@ export class LoginService {
 		if ( user && user.password === password) {
 			const token = this.authService.createJWT(username);
 			return {
+				user: username,
 				token: token
 			};
 		} else {

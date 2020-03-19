@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoginModule } from './login/login.module';
 import { AuthService } from './auth/auth.service';
-import { FileModule } from './upload/file.module';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
