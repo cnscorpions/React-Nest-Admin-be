@@ -4,7 +4,7 @@ import { PRIVATE_KEY, JWT_EXPIRED } from "../utils/constant";
 
 @Injectable()
 export class AuthService {
-
+	
 	// generate jwt
 	createJWT(username) {
 		const token = jwt.sign(
