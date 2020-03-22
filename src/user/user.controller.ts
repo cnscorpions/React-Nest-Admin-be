@@ -18,7 +18,15 @@ export class UserController {
 	// 注册
 	@Post('signup')
 	async signup(@Body() Body) {
-		const data = await this.userService.createUer(Body);
+		const data = await this.userService.createUser(Body);
 		return data;
 	}
+
+	// 重置密码
+	@Post('reset-pwd')
+	async resetPwd(@Body() Body) {
+		const data = await this.userService.resetPassword(Body);
+		return data;
+	}
+
 }
