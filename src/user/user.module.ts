@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from "@nestjs/mongoose";
-import { LoginController } from './login.controller';
-import { LoginService } from './login.service';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 import { AuthService } from "../auth/auth.service";
 import { EncryptService } from "../encrypt/encrypt.service";
 import { UserSchema } from "./schemas/user.schema";
@@ -10,7 +10,7 @@ import { UserSchema } from "./schemas/user.schema";
 	imports: [
 		MongooseModule.forFeature([{ name: "User", schema: UserSchema }])
 	],
-  controllers: [LoginController],
-  providers: [LoginService, AuthService, EncryptService]
+  controllers: [UserController],
+  providers: [UserService, AuthService, EncryptService]
 })
-export class LoginModule {}
+export class UserModule {}

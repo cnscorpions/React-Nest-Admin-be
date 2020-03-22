@@ -6,7 +6,7 @@ import { AuthService } from "../auth/auth.service";
 import { EncryptService } from 'src/encrypt/encrypt.service';
 
 @Injectable()
-export class LoginService {
+export class UserService {
 
 	constructor(
 		@InjectModel("User") private readonly userModel: Model<User>,

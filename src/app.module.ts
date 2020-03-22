@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { LoginModule } from './login/login.module';
+import { UserModule } from './user/user.module';
 import { AuthService } from './auth/auth.service';
 import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
-  	LoginModule,
+  	UserModule,
   	MongooseModule.forRoot('mongodb://localhost:37017/bookAdmindb', {
   		useNewUrlParser: true,
   		useUnifiedTopology: true 
