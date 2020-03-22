@@ -19,7 +19,7 @@ export class LoginService {
 		const { username, password } = Body;
 		const user = await this.findUser(username);
 		// 用户存在且密码正确
-		const isAuthedUser = this.encryptService.validate(password, user.password);
+		const isAuthedUser = await this.encryptService.validate(password, user.password);
 		if ( user && isAuthedUser) {
 			const token = this.authService.createJWT(username);
 			return {

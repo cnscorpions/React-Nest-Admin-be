@@ -4,7 +4,8 @@ import * as bcrypt from "bcrypt";
 @Injectable()
 export class EncryptService {
 
-    saltRounds = 16;
+    // 默认此参数即可，改动可能会托慢请求
+    saltRounds = 10;
 
     // 加密
     getEncrypted(pwd, saltRounds) {
@@ -16,8 +17,8 @@ export class EncryptService {
     }
 
     // 验证 
-    validate(pwd, pwdHash) {
-        return bcrypt.compareSync(pwd, pwdHash);
+    async validate(pwd, pwdHash) {
+        return await bcrypt.compareSync(pwd, pwdHash);
     }
 
 }
