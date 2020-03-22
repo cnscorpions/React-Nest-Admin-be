@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Model } from "mongoose";
+import { UserDto } from "./dto/user.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { User } from "./interfaces/user.interface";
 import { AuthService } from "../auth/auth.service";
@@ -15,6 +16,7 @@ export class UserService {
 		) {
 	}
 
+	// 验证登录用户
 	async validateLogin(Body) {
 		const { username, password } = Body;
 		const user = await this.findUser(username);
@@ -32,6 +34,24 @@ export class UserService {
 				error: "账户密码不正确，请重新输入！"
 			}, 403);
 		}
+	}
+
+	// 用户注册
+	async createUer(userDto: UserDto): Promise<any> {
+		const { username, password } = userDto;
+		const user = await this.findUser(username);
+		// 验证用户是否存在
+		if ( user ) {
+			throw new HttpException({
+				status: HttpStatus.FORBIDDEN,
+				error: "用户已经存在"
+			}, 403);
+		}
+		// 给用户加密
+		const hashPwd = await this.encryptService.getEncrypted(password);
+		const newUser = new this.userModel({ username: username, password: hashPwd});
+		await newUser.save();
+		return `注册${username}成功！`;
 	}
 
 	// query in mongodb
