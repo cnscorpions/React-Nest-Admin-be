@@ -32,11 +32,14 @@
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
     "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.1.2",
     "mime": "^2.4.4",
+    "moment": "^2.24.0",
     "mongoose": "^5.9.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.5.4",
+    "stacktrace-js": "^2.0.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.13.2",

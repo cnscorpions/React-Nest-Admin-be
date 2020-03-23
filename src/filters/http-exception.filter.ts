@@ -1,4 +1,4 @@
-import { HttpException, ArgumentsHost, Catch, ExceptionFilter, Logger, HttpStatus } from '@nestjs/common';
+import { HttpException, ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/common';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -8,7 +8,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
   	const response = ctx.getResponse();
 
   	const message = exception.message.message;
-  	Logger.log("错误提示", message);
+
   	const errorResponse = {
   		data: {
   			error: message
