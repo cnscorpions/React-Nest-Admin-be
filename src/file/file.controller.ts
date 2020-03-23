@@ -1,18 +1,21 @@
 import { Controller, Get, Post, Body, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from "@nestjs/platform-express";
-import { AuthGuard } from "../auth/auth.guard";
+import { AuthGuard } from "../auth/guards/auth.guard";
+import { RolesGuard } from "../auth/guards/roles.guard";
+import { Roles } from "../auth/decorators/role.decorator";
 import { FileService } from "./file.service";
 import { UPLOAD_DIR } from "../utils/constant";
 import { File } from "./models/File";
 
 @Controller('file')
+@UseGuards(AuthGuard)
 export class FileController {
 
 	constructor(private readonly fileService: FileService) {}
 
-	// upload ebook
+	// upload
 	@Post("upload")
-	@UseGuards(AuthGuard)
+	@UseGuards(RolesGuard)
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	async uploadFile(@UploadedFile() file, @Body() body) {
 		console.log(file, body['user']);
@@ -22,14 +25,12 @@ export class FileController {
 	}
 
 	@Get("list")
-	@UseGuards(AuthGuard)
 	async getFileList() {
 		const result = await this.fileService.findAll();
 		return result;
 	}
 
 	@Post("delete")
-	@UseGuards(AuthGuard)
 	async removeFile(@Body() body) {
 		const { id, filePath } = body;
 		return this.fileService.delete(id, filePath);
