@@ -21,12 +21,15 @@ export class UserService {
 	async validateLogin(Body) {
 		const { username, password } = Body;
 		const user = await this.findUser(username);
+		// 拿到角色
+		const { roles } = user;
 		// 用户存在且密码正确
 		const isAuthedUser = await this.encryptService.validate(password, user.password);
 		if ( user && isAuthedUser) {
 			const token = this.authService.createJWT(username);
 			return {
-				user: username,
+				username: username,
+				roles: roles,
 				token: token
 			};
 		} else {
@@ -39,18 +42,24 @@ export class UserService {
 
 	// 用户注册
 	async createUser(userDto: UserDto): Promise<any> {
-		const { username, password } = userDto;
+		const { username, password, roles = ["user"]} = userDto;
 		const user = await this.findUser(username);
 		// 验证用户是否存在（不能为admin）
-		if ( user && username !== "admin") {
+		if ( user ) {
 			throw new HttpException({
 				status: HttpStatus.FORBIDDEN,
 				error: "用户已经存在"
 			}, 403);
+		} else if (username !== "admin") {
+			throw new HttpException({
+				status: HttpStatus.FORBIDDEN,
+				error: "无权注册admin"
+			}, 403);
 		}
 		// 给用户加密
 		const hashPwd = await this.encryptService.getEncrypted(password);
-		const newUser = new this.userModel({ username: username, password: hashPwd});
+		// 创建user（root用户此方法无法创建）
+		const newUser = new this.userModel({ username: username, password: hashPwd, roles: roles});
 		await newUser.save();
 		return `注册${username}成功！`;
 	}
@@ -80,6 +89,7 @@ export class UserService {
 		{ 
 			username : 1,
 			password: 1,
+			roles: 1,
 			_id: 0
 		}).exec();
 	}

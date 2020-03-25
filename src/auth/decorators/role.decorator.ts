@@ -1,3 +1,3 @@
-import { SetMetadata } from "@nestjs/common";
+import { ReflectMetadata } from "@nestjs/common";
 
-export const Roles = (...roles: string[]) => SetMetadata("roles", roles);
+export const Roles = (roles: string[]) => ReflectMetadata("roles", roles);

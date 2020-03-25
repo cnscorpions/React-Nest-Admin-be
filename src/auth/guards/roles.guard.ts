@@ -7,19 +7,18 @@ export class RolesGuard implements CanActivate {
 	constructor(private readonly reflector: Reflector) {}
 
 	canActivate(context: ExecutionContext): boolean {
-		const roles = this.reflector.get<string[]>("roles", context.getHandler);
-		// 没有使用roles装饰器
-		if (!roles) {
+		const rolesFromBe = this.reflector.get<string[]>("roles", context.getHandler());
+		// 当不存在角色列表的情况下，直接通过
+		if (!rolesFromBe) {
 			return true;
 		}
 
+		// 拿到request对象
 		const request = context.switchToHttp().getRequest();
-
-		const user = request.user;
-
-    const hasRole = () =>
-      user.roles.some(role => !!roles.find(item => item === role));
-
-    return user && user.roles && hasRole();
+		// 从请求头拿到roles
+		const rolesFromFe = request.headers.roles;
+		// role匹配
+    return rolesFromBe.includes(rolesFromFe);
 	}
+
 }

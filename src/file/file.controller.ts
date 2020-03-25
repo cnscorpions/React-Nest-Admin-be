@@ -8,14 +8,14 @@ import { UPLOAD_DIR } from "../utils/constant";
 import { File } from "./models/File";
 
 @Controller('file')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class FileController {
 
 	constructor(private readonly fileService: FileService) {}
 
 	// upload
 	@Post("upload")
-	@UseGuards(RolesGuard)
+	@Roles(["admin", "user"])
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	async uploadFile(@UploadedFile() file, @Body() body) {
 		console.log(file, body['user']);
@@ -31,6 +31,7 @@ export class FileController {
 	}
 
 	@Post("delete")
+	@Roles(["admin", "user"])
 	async removeFile(@Body() body) {
 		const { id, filePath } = body;
 		return this.fileService.delete(id, filePath);
