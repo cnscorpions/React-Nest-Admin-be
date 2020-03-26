@@ -1,4 +1,4 @@
-import { IsString, IsArray } from "class-validator";
+import { IsString, IsArray, IsBoolean } from "class-validator";
 
 export class UserDto {
 
@@ -10,5 +10,8 @@ export class UserDto {
 
 	@IsArray()
 	readonly roles: string[];
+
+	@IsBoolean()
+	readonly isEnabled: boolean;
 
 }

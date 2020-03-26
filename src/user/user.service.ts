@@ -22,7 +22,7 @@ export class UserService {
 		const { username, password } = Body;
 		const user = await this.findUser(username);
 		// 拿到角色
-		const { roles } = user;
+		const { roles, isEnabled } = user;
 		// 用户存在且密码正确
 		const isAuthedUser = await this.encryptService.validate(password, user.password);
 		if ( user && isAuthedUser) {
@@ -30,6 +30,7 @@ export class UserService {
 			return {
 				username: username,
 				roles: roles,
+				isEnabled: isEnabled,
 				token: token
 			};
 		} else {
@@ -44,13 +45,14 @@ export class UserService {
 	async createUser(userDto: UserDto): Promise<any> {
 		const { username, password, roles = ["user"]} = userDto;
 		const user = await this.findUser(username);
+		console.log("user", user);
 		// 验证用户是否存在（不能为admin）
 		if ( user ) {
 			throw new HttpException({
 				status: HttpStatus.FORBIDDEN,
 				error: "用户已经存在"
 			}, 403);
-		} else if (username !== "admin") {
+		} else if (username === "admin") {
 			throw new HttpException({
 				status: HttpStatus.FORBIDDEN,
 				error: "无权注册admin"
@@ -92,6 +94,11 @@ export class UserService {
 			roles: 1,
 			_id: 0
 		}).exec();
+	}
+
+	// query all
+	async findAllUsers(): Promise<User[]> {
+		return this.userModel.find({}).exec();
 	}
 
 	// update in mongodb
