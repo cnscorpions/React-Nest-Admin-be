@@ -25,25 +25,34 @@ export class File {
 			destination: des, // 文件本地存储目录
 			filename, // 文件名称
 			mimetype,
-			size
+			size,
+			originalname
 		} = file;
+
+		console.log(file);
 
 		const suffix = mimetype === mimetype ? "." + mime.getExtension(mimetype) : ""; // 后缀名
 		const oldFilePath = `${des}/${filename}`;
 		const filePath = `${des}${filename}${suffix}`;
 		const url = `${UPLOAD_DIR}${filename}${suffix}`;
         
-        if (fs.existsSync(oldFilePath) && !fs.existsSync(filePath)) {
-          fs.renameSync(oldFilePath, filePath) // 重命名文件
-        }
+    if (fs.existsSync(oldFilePath) && !fs.existsSync(filePath)) {
+      fs.renameSync(oldFilePath, filePath) // 重命名文件
+    }
 
-        this.fileName = filename 
-        this.filePath = filePath 
-				this.url = url
-				this.uploader = data;
-				this.timeOfUpload = new Date().getTime();
-				this.fileSize = size;
+    this.fileName = this.generateFileName(originalname, suffix);
+    this.filePath = filePath;
+		this.url = url;
+		this.uploader = data;
+		this.timeOfUpload = new Date().getTime();
+		this.fileSize = size;
 
+	}
+
+	private generateFileName(originalname: string, suffix: string): string {
+		const indexOfDot = originalname.indexOf(".");
+		const newFileName = originalname.slice(0, indexOfDot) + '-' + Date.now() + suffix;
+		return newFileName;
 	}
 
 }

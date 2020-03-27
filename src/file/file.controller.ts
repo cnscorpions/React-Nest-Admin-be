@@ -18,7 +18,6 @@ export class FileController {
 	@Roles(["admin"])
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	async uploadFile(@UploadedFile() file, @Body() body) {
-		console.log(file, body['user']);
 		const fileObj = new File(file, body['user']);
 		const result = await this.fileService.create(fileObj);
 		return result;
