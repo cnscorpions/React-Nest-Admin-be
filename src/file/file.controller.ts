@@ -15,7 +15,7 @@ export class FileController {
 
 	// upload
 	@Post("upload")
-	@Roles(["admin", "user"])
+	@Roles(["admin"])
 	@UseInterceptors(FileInterceptor("file", { dest: UPLOAD_DIR }))
 	async uploadFile(@UploadedFile() file, @Body() body) {
 		console.log(file, body['user']);
@@ -31,7 +31,7 @@ export class FileController {
 	}
 
 	@Post("delete")
-	@Roles(["admin", "user"])
+	@Roles(["admin"])
 	async removeFile(@Body() body) {
 		const { id, filePath } = body;
 		return this.fileService.delete(id, filePath);
