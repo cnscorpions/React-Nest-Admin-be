@@ -5,6 +5,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { UserModule } from "./user/user.module";
 import { AuthService } from "./auth/auth.service";
 import { FileModule } from "./file/file.module";
+import { ExcelModule } from './excel/excel.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { FileModule } from "./file/file.module";
       useNewUrlParser: true,
       useUnifiedTopology: true
     }),
-    FileModule
+    FileModule,
+    ExcelModule
   ],
   controllers: [AppController],
   providers: [AppService, AuthService]
